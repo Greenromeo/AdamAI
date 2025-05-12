@@ -1,17 +1,15 @@
-import sys
-import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# tests/test_ai_controller.py
 
 import unittest
 from core.ai_controller import AIController
+from core.ai_engine import AIEngine
 
 class TestAIController(unittest.TestCase):
     def setUp(self):
-        self.controller = AIController()
+        mock_engine = AIEngine()
+        mock_engine.get_model = lambda: b"mock model"
+        self.controller = AIController(mock_engine)
 
     def test_interact_with_ai(self):
-        response = self.controller.interact_with_ai('Hello, AdamAI!')
-        self.assertTrue(len(response) > 0, 'Response should not be empty')
-
-if __name__ == '__main__':
-    unittest.main()
+        result = self.controller.execute()
+        self.assertEqual(result, b"mock model")

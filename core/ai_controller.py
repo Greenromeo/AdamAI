@@ -1,9 +1,13 @@
-from llm.engine import AdamLLM
+# core/ai_controller.py
 
 class AIController:
-    def __init__(self):
-        self.llm = AdamLLM()
+    def __init__(self, engine):
+        self.engine = engine
 
-    def interact_with_ai(self, prompt):
-        return self.llm.ask(prompt)
-
+    def execute(self):
+        try:
+            model_data = self.engine.get_model()
+            return model_data
+        except Exception as e:
+            print(f"Error in execution: {e}")
+            return None
